@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting to Timesheet</title>
+    <script type="text/javascript">
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      const mainUrlPart = "https://timesheet-f41.pages.dev";
+      const currentMonth = String(today.getMonth() + 1).padStart(2, "0");
+      const dynamicUrlPart = `/${currentYear}/${currentMonth}`;
+      const fullUrl = `${mainUrlPart}${dynamicUrlPart}`;
+      console.log("Directly embedded path:", fullUrl);
+
+      if (fullUrl) {
+        document.addEventListener("DOMContentLoaded", function () {
+          const messageDiv = document.getElementById("message");
+          if (messageDiv) {
+            messageDiv.innerHTML = `If you are not redirected automatically, follow this <a href="${fullUrl}">${fullUrl}</a>.`;
+          }
+        });
+
+        window.location.replace(fullUrl);
+      } else {
+        // Fallback if dynamicUrl is not determined (e.g., show an error or default link)
+        document.addEventListener("DOMContentLoaded", function () {
+          const messageDiv = document.getElementById("message");
+          if (messageDiv) {
+            messageDiv.innerHTML =
+              "<p>Could not determine the timesheet URL. Please contact support.</p>";
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="message">
+      <p>
+        If you are not redirected automatically, please wait or check your
+        connection.
+      </p>
+    </div>
+  </body>
+</html>
